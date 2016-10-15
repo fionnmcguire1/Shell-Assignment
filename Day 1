@@ -1,0 +1,41 @@
+
+14/10/2016
+
+logged into node1 (existing vm on my machine)
+created HomerJSimpson user with password: doh
+did this by entering the following commands
+su
+(entered password)
+useradd HomerJSimpson
+Password: doh
+Re-type password: doh
+
+Looked at creating the shell in C,python. These seemed incredibly difficult to implement so i decided to stick with
+bash shell scripting. Found a range of tutorials online in C which gave me the outline of what a shell looks like
+i.e create a look, read line, plug that input into a function with arguments/ execute the command in stdin, output results.
+
+Although that seems realitively basic, this was useful in giving me an idea on what was required.
+Brian(lecturer) talks about forking and pids with external commands. I decided to create a plan for the assignment 
+before i delve into that.
+
+1. Create shell script, make executable with shebang
+2. Produce welcome message
+3. wait
+4. readline
+5. echo line
+6. create a prompt
+7. build internal commands using alliasing
+8. Make HomeJSimpson (already done)
+9. Make the shell script homejsimpsons default shell
+10. exit (No termination, when user types exit, they exit the loop and therefore the script)
+11. Logout user after exit
+12. Build external commands
+Extra credit
+13. Build more commands that would make sense for a user to have with restricted permission
+14. Stop the user from using certain commands
+15. Format the output so it looks more readable for the user.
+
+When i was working on my node1 virtual machine i tried to change the homerjsimpson shell but i didn't type his name at the end
+This meant that i changed the su shell to a non executable file.
+Every time i tried to change it back i got a PAM: Authentication failure.
+I spents two and a half hours trying to fix it before giving up and creating a new VM called Shell assignment.
