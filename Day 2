@@ -1,0 +1,50 @@
+15/10/2016
+Fionn Mcguire
+C13316356
+Systems Integration CA01
+
+Created a shell script in my new VM
+Naming the shell script custom_shell.sh
+
+made the shebang
+wrote a welcome message and a wait command for 5s
+This worked successfully.
+
+Added functionality to read user input
+read input
+while [ $input != "exit" ]
+do
+echo $input;
+done
+
+
+Changed the default shell of HomerJSimpson to my custom_shell.sh with the command
+chsh -s /bin/custom_shell.sh HomerJSimpson and tested this by completely logging out and logging back in as HomerJSimpson
+
+I also checked the termination by entering in a few commands to be echoed back to me followed by exit and Homer was logged out.
+
+Next i wanted to add a prompt
+I was able to get the username equalled to a variable which i printed as part of a string
+user=whoami;
+echo $user"@CustomShell: "
+
+This was the new prompt however it printed and then went down a line for the input which isn't the style of contemporary
+command prompts.
+
+I fixed this by replacing echo with printf as printf has much more option with regards to formatting.
+$user"@CustomShell: "; became printf "%s@CustomShell" "$user";
+
+Now to build the internal commands
+At first i did an if statement to check if the input was dt and if it was just run the date command. I realised this was
+too easy and checked the spec of the Assignment which specified that we were not to use internal commands.
+We are to merely replicate the effects of the date command in our own custom command called dt.
+
+I researched how to find the internal timer of where the date command gets it's date from. As far as i know the timer starts
+at the 01/01/1970 and runs a timer from their to keep up with the current dat. The date command merely runs a 
+simple calculation to divide by years, take away the extra days from leap years, divide by, days,hours,minutes,seconds. This
+is all derived from miliseconds. Hoever i only assume this form my interaction with the date function in php. I went and
+researched the date funtion in more detail to see if this was the case. My suspition is that if you request an output
+from the internal timer you'll get a large string which would represent miliseconds.
+
+I used the type command to check if date was an external command. The type command returned /bin/date meaning it was external.
+I checked the type command with a series of built ins and this proved the validity of the type command vs date.
