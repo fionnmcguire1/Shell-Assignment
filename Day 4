@@ -1,26 +1,47 @@
 19/10/2016
 
-I was confused as to how one completes the internal command section of the assignment, I spoke with one of my classmates and he explained to me that internal commands were commands executed by the script and external commands call the command. So concider the date function. The date function is an external command if the custom_shell.sh implements it like this
+I was confused as to how one completes the internal command section of the assignment, I spoke with one of my classmates 
+and he explained to me that internal commands were commands executed by the script and external commands call the 
+command. So concider the date function. The date function is an external command if the custom_shell.sh implements 
+it like this
 >>> date
-But if i create a seperate script, inside the new script call the date function and the shell implements it this by something like
+But if i create a seperate script, inside the new script call the date function and the shell implements 
+it this by something like
 >>>echo $(sh fionns_date_function.sh);
-Then this is an internal command. So i had to configure my existing shell. I also had to figure out a way to upload my work to github. To try fix the apt get i looked online and found a stack overflow soloution that told me to go to /etc/resolvconf/resolv.conf.d and add the lines 
+Then this is an internal command. So i had to configure my existing shell. I also had to figure out a way to upload 
+my work to github. To try fix the apt get i looked online and found a stack overflow soloution that told me to go 
+to /etc/resolvconf/resolv.conf.d and add the lines 
 nameserver 8.8.8.8
 nameserver 8.8.4.4
-These are apparently googles name servers. Apparently the issue i was having could have come from a static IP on my VM. However this did not solve the issue. After this i tried to add the addresses to /etc/hosts 
+These are apparently googles name servers. Apparently the issue i was having could have come from a static IP on my 
+VM. However this did not solve the issue. After this i tried to add the addresses to /etc/hosts 
 "91.189.91.24 security.ubuntu.com" >> /etc/hosts 
 echo "91.189.91.24 archive.ubuntu.com" >> /etc/hosts
 This also did not work.
 
-First i decided to tackle the internal commands dt and ud. If the user enters dt then the date function must be outputted. If the user enters ud then userID, groupID, username, groupname, iNode of user’s home directory must be outputted. The date function seemed simple enough so i looked into the ud function. I searched and tested commands and found that it was fairly simple to get the most of the information using the command "id". However it seemed to be a very difficult task to return these in a readable format. I decided to get the uid and gid from formatting the command id using the operators -u (for uid) and -g (for gid). Then i got the username from "whoami" and the groupname from "groups". I didn't know how to get the iNode id so i checked stackoverflow. Stackoverflow showed me a command "stat -c '%i' /DIR" that could give me the iNode id of any given directory. I tested the command replacing /DIR with $HOME and this seemed to work after i tested it on multiple accounts.
+First i decided to tackle the internal commands dt and ud. If the user enters dt then the date function must be outputted.
+If the user enters ud then userID, groupID, username, groupname, iNode of user’s home directory must be outputted. 
+The date function seemed simple enough so i looked into the ud function. I searched and tested commands and found that 
+it was fairly simple to get the most of the information using the command "id". However it seemed to be a very 
+difficult task to return these in a readable format. I decided to get the uid and gid from formatting the command 
+id using the operators -u (for uid) and -g (for gid). Then i got the username from "whoami" and the groupname 
+from "groups". I didn't know how to get the iNode id so i checked stackoverflow. Stackoverflow showed me a 
+command "stat -c '%i' /DIR" that could give me the iNode id of any given directory. I tested the command replacing
+/DIR with $HOME and this seemed to work after i tested it on multiple accounts.
 
-I created a shell script in bin called custom_shell_date.sh to implement the date function. Inside the script i simply wrote:
+I created a shell script in bin called custom_shell_date.sh to implement the date function. Inside the script 
+i simply wrote:
 #!/bin/bash
 echo $(date);
 
-I then tested the dt command and it worked perfectly. This is an area where i could add further functionality if i needed such as formatting the date.
+I then tested the dt command and it worked perfectly. This is an area where i could add further
+functionality if i needed such as formatting the date.
 
-Next was the ud function. I initiated the file with the shebang and then created a series of variables uid,gid,username,groupnames,iNode and set the values of these commands the output of their corresponding commands id -u,id -g, whoami, groups, stat -c '%i' $HOME. Then i used printf to format the output. This worked fine, i then emailed brian to make sure what i had done was correct and then i could get started on extending features of the custom shell.
+Next was the ud function. I initiated the file with the shebang and then created a series of variables 
+uid,gid,username,groupnames,iNode and set the values of these commands the output of their corresponding commands
+id -u,id -g, whoami, groups, stat -c '%i' $HOME. Then i used printf to format the output. This worked fine, 
+i then emailed brian to make sure what i had done was correct and then i could get started on extending features 
+of the custom shell.
 
 Extending features
 - Command history using arrow keys
