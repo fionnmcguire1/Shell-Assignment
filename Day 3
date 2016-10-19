@@ -12,16 +12,50 @@ directory i had to crete one using mkhomedir_helper. This created a simple Home 
 
 Next i tried to cut off the tail of the pw command. I wanted to run the pwd command if the user types pw but not if they type 
 pwd however if they type pw hello i want the command to still run. This required me to check if 'pw' or 'pw ' were the first
-characters entered. I tried expr substr ${input} 0:2 = 'pw ' but this came up as "Too many arguments". I searched stack overflow for a soloution. However i didn't want to cut off the end of the string because i still wanted to neglect the pwd command. I breifly tried to use grep but for some reason the command wouldn't register in the shell. After trying a variation of ways to get the substr i realised that the problem could be the space, if the user enters "pw hello" that could register as two arguments.
+characters entered. I tried expr substr ${input} 0:2 = 'pw ' but this came up as "Too many arguments". I searched stack 
+overflow for a soloution. However i didn't want to cut off the end of the string because i still wanted to neglect the 
+pwd command. I breifly tried to use grep but for some reason the command wouldn't register in the shell. After trying a 
+variation of ways to get the substr i realised that the problem could be the space, if the user enters "pw hello" that 
+could register as two arguments.
 
-I found an instance in stackoverflow where someone suggested to put quotes around everywhere you reference the variable. I quoted every instance of the variable and this made progress. "pw hello" was not registering as a command but at least the error returned was my own and not that a linux stderr. This meant there was a problem with the second condition of one of the if statments. When i tried ${input:0:2} = 'pw ' i got an error "Bad substitution". I tried to use the awk command awk '{stubstr($input:0:2)}' however this also resulted in too many arguments. Then i looked into the read command and tried to see if i could get how many arguments the read command registered. I then tried a variation of the origional substr "${input:0:3}" and this worked.
+I found an instance in stackoverflow where someone suggested to put quotes around everywhere you reference the variable. 
+I quoted every instance of the variable and this made progress. "pw hello" was not registering as a command but at least 
+the error returned was my own and not that a linux stderr. This meant there was a problem with the second condition of 
+one of the if statments. When i tried ${input:0:2} = 'pw ' i got an error "Bad substitution". I tried to use the awk command 
+awk '{stubstr($input:0:2)}' however this also resulted in too many arguments. Then i looked into the read command and 
+tried to see if i could get how many arguments the read command registered. I then tried a variation of the origional 
+substr "${input:0:3}" and this worked.
 
-Next i wanted to implement the second command ifconfig allisased as "ifc".  The command must implement ifconfig if ifc is entered, however if ifc eth0 is entered it must alter the command to be executed to "ifconfig eth0". I wanted to check if the user had entered "ifc" or "ifc eth" if the user entered "ifc eth0" the if statment checks that the input contains ifc or ifc eth. If so it goes into a nested if statment that checks the length of the statment >7 and < 10 incase the user wanted to check device eth100. if not it executes the standard ifconfig if it does contain the nessisary length then the if statment appends the ifconfig command to contain the entire string after the third character. After i tinkered around with this for a while dealing with the same bad substitution error i changed ${#$input} (to get the length of the input string) to ${#input} and this worked. However i realised that if i typed in "ifc eth" or "ifc eth100" (something that would provolk an error) that the script would give me no response, not even an error message. I wanted to give some user feedback.
+Next i wanted to implement the second command ifconfig allisased as "ifc".  The command must implement ifconfig if 
+ifc is entered, however if ifc eth0 is entered it must alter the command to be executed to "ifconfig eth0". I wanted
+to check if the user had entered "ifc" or "ifc eth" if the user entered "ifc eth0" the if statment checks that the
+input contains ifc or ifc eth. If so it goes into a nested if statment that checks the length of the statment >7 and
+< 10 incase the user wanted to check device eth100. if not it executes the standard ifconfig if it does contain the 
+nessisary length then the if statment appends the ifconfig command to contain the entire string after the third character.
+After i tinkered around with this for a while dealing with the same bad substitution error 
+i changed ${#$input} (to get the length of the input string) to ${#input} and this worked. However i realised that 
+if i typed in "ifc eth" or "ifc eth100" (something that would provolk an error) that the script would give me no response,
+not even an error message. I wanted to give some user feedback.
 
-For some reason when i ran an if to check if no output existed, the origional error message was returned, then when i commented out the if it still ran. I also changed the length to <11 this was probably the reason to skip the if statement.
+For some reason when i ran an if to check if no output existed, the origional error message was returned, 
+then when i commented out the if it still ran. I also changed the length to <11 this was probably the reason to skip the
+if statement.
 
-After attempting to implement custom error feedback I found many unary errors and then I fixed them and the output still came out as the error message. I made the output of the ifconfig eth100 command equalled to $output and then compared the output to 0 however this came out as a unary error. When i compared the output to the error message this gave me no unary error but it merely printed out the standard error. I thought that the variable output might be empty because there would be no stdout just stderr so I found a post on stack overflow that allowed me to check if a variable was empty using -z. This printed out the stderr and my custom error message. Now i had to figure out how to not print the stderr. I tried pushing all stderr to the bin but i couldn't figure out the correct syntax to do so for just one command. I was able to get rid of stderr but only as root when i called the shell script custom_shell.sh 2>/dev/null. When but concidering this is an automatic shell their is no option to do that so i must suppress the stderr from within the script.
+After attempting to implement custom error feedback I found many unary errors and then I fixed them and the output still
+came out as the error message. I made the output of the ifconfig eth100 command equalled to $output and then compared the
+output to 0 however this came out as a unary error. When i compared the output to the error message this gave me no unary
+error but it merely printed out the standard error. I thought that the variable output might be empty because there would
+be no stdout just stderr so I found a post on stack overflow that allowed me to check if a variable was empty using -z. 
+This printed out the stderr and my custom error message. Now i had to figure out how to not print the stderr. I tried pushing
+all stderr to the bin but i couldn't figure out the correct syntax to do so for just one command. I was able to get 
+rid of stderr but only as root when i called the shell script custom_shell.sh 2>/dev/null. When but concidering this
+is an automatic shell their is no option to do that so i must suppress the stderr from within the script.
 
-The variable $output is equalled to the command, i have been supressing the stderr from when i print the command. When i made $output=ifconfig ${input:4} 2>/dev/null the stderr for that command was suppressed. This allowed me to create custom error feedback.
+The variable $output is equalled to the command, i have been supressing the stderr from when i print the command. 
+When i made $output=ifconfig ${input:4} 2>/dev/null the stderr for that command was suppressed. This allowed me to
+create custom error feedback.
 
-I tried to upload my file to gihub but unfortunately there was a problem with sudo apt-get. I got the error security.ubuntu.com, i checked online and there seemed to be mixed opinions of what the problem was. I didn't have time to resolve this as i have two concurrent assignments aswell as labs and a fourth year project so i decided to email brian and ask him if screenshots and written documentation of the process will do.
+I tried to upload my file to gihub but unfortunately there was a problem with sudo apt-get. I got the error
+security.ubuntu.com, i checked online and there seemed to be mixed opinions of what the problem was. I didn't have time
+to resolve this as i have two concurrent assignments aswell as labs and a fourth year project so i decided to email 
+brian and ask him if screenshots and written documentation of the process will do.
