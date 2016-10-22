@@ -1,0 +1,92 @@
+22/10/2016
+
+
+Today my focus is on extending functionality, the other day i was working on creating a DIT logo, couldn't get the detail
+of the logo down but if the user types "logo" a figure of the dit logo is printed. This was coming out all wrong in print
+i changed the calling line from echo "$(sh custom_shell_logo.sh);" to "sh custom_shell_logo.sh;" Next i want to add a few
+more commands, simple useful ones like: cd,echo,ls,man,rm,cp,touch,nano,grep,ssh,top,kill,mv,cat,passwd,mkdir,whoami,tail,ping.
+These 18 commands all work differently. I'll be creating the man page at the end as to give appropriote descriptions of what
+i've created. After that i'll add a history of recent commands entered using the arrow keys to navigate through these commands.
+Then i'll improve the commands i've already created.Then i'll take screenshots of my code and submit the assignment
+unless theres any other extended functionality i can think of.
+
+Environment variables
+
+I created the cd command by checking if the first three characters were "cd " then executing the cd command with the command 
+tail entered by the user. 
+
+I created the ls command by doing the same however ls has a number of operators. I first had to check the command was working
+correctly. I did ls but all of the files were mushed together as though it was one word. I took our printf and replaced it with
+echo. This gave me spaces between filenames, then i added a pipe to the end of the command | tr " " "\n" this replaced every 
+space with a newline character. Now cd and ls worked. I could improve these later if i have time, to have their own error 
+messages, accept different ls modes ect.
+
+Getting the echo command going was fairly basic, i just had to check the first 5 characters were "say ", this is my own 
+variation of echo that just to me seems more intuitive.
+
+I created the touch command simply by checking if the start of the user input was touch, then executing the touch command.
+Later i'll have to check and make sure the user enters a tail otherwise they will get an error, i also want to make custom
+errors.
+
+Then to create the rm command i looked into the structure of the command, standard remove has no operator, the ability to
+delete a directory and delete a restricted file such as a readme requires an operator such as -f or -r. This functionality
+will be added later.
+
+To create the whoami comman i just checked if the user entered whoami and then ran the command.
+
+To create nano was done by checking if the first five characters of user input is "nano ". However when i tried this i got
+an infinite loop. This could potentially be caused by nano calling nano.
+
+
+After testing the system:
+ _______                         ______                        _______
+|Command|---------------------- |Status| -------------------- |Comment|
+
+ls      ------------------------ WORKS  ---------------------- but with no operators
+cd      ------------------------ Not Working -----------------
+pw      ------------------------ WORKS  ----------------------
+IFC     ------------------------ WORKS  ---------------------- but with no formatting
+Date    ------------------------ WORKS  ----------------------
+ud      ------------------------ WORKS  ----------------------
+logo    ------------------------ WORKS  ----------------------
+touch   ------------------------ WORKS  ----------------------
+echo    ------------------------ WORKS  ----------------------
+rm      ------------------------ WORKS  ---------------------- but with no operators
+whoami  ------------------------ WORKS  ----------------------
+grep    ------------------------ TBD    ----------------------
+top     ------------------------ TBD    ----------------------
+kill    ------------------------ TBD    ----------------------
+mv      ------------------------ TBD    ----------------------
+cat     ------------------------ TBD    ----------------------
+passwd  ------------------------ TBD    ----------------------
+mkdir   ------------------------ Not Working    -------------- Not sure if this doesn't work or cd doesn't work
+whoami  ------------------------ WORKS    --------------------
+tail    ------------------------ TBD    ----------------------
+ping    ------------------------ TBD    ----------------------
+Command History ---------------- TBD    ----------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
