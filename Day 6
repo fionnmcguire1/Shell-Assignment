@@ -1,0 +1,76 @@
+23/10/2016
+
+
+I realised that echo $(cd "${input:3}"); basically ouputs the command but does not execute the command. Thats why it worked 
+with pw because pw was simply returning a value. After cd worked i tested the mkdir command. This worked fine however i 
+realised the ls command worked but not fully. The command didn't change the color of files depending on their type.
+
+The tail command is in the form "tail n filename.txt" the n represents the number of lines returned. This is relatively
+easy to get going. at this point through testing the tail command i realised that the touch command makes an empty file
+no even for reading. Then i tried testing out the nano command. The nano command operates by taking in the format
+nano [filename]. However this is really, nano [readable-filename]. When i tried nano file1.txt it created a new file1.txt and 
+opened it in nano. Then i wrote to the file saved it and tested tail. Tail opened the file that was wrote to. This meant i
+had to delete all the files which were not readable. I was able to give the rm command a little bit more testing. At this point
+i realised that it would have been very useful to create a command history to repeat commands.
+
+I searched how to read commands without pressing enter. I searched how to read arrows and fell to a dead end so i decided to
+put a pin in that. 
+
+The password command was created with another elif statement. I changed the command for "passwd" to be "chpass". 
+Wrote the top command and the kill command. The top command works fine however i was unable to test the kill command this
+late in the assignment as i had already had to scrap a VM and didn't want to have to do it again this late in the game.
+
+
+After testing the system:
+ _______                         ______                        _______
+|Feature|---------------------- |Status| -------------------- |Comment|
+
+ls      ------------------------ WORKS  ---------------------- but with no operators,no colors
+cd      ------------------------ WORKS  ----------------------
+pw      ------------------------ WORKS  ----------------------
+IFC     ------------------------ WORKS  ---------------------- 
+Date    ------------------------ WORKS  ---------------------- but with no formatting
+ud      ------------------------ WORKS  ----------------------
+logo    ------------------------ WORKS  ----------------------
+touch   ------------------------ WORKS  ----------------------
+echo    ------------------------ WORKS  ----------------------
+rm      ------------------------ WORKS  ---------------------- but with no operators
+whoami  ------------------------ WORKS  ----------------------
+nano    ------------------------ WORKS  ----------------------
+grep    ------------------------ TBD    ---------------------- Don't think i'll include this
+top     ------------------------ WORKS  ---------------------- doesn't take operators
+kill    ------------------------ WORKS  ---------------------- Not actually sure if this works
+mv      ------------------------ TBD    ---------------------- Don't think i'll include this
+cat     ------------------------ TBD    ---------------------- Don't think i'll include this
+passwd  ------------------------ WORKS  ----------------------
+mkdir   ------------------------ WORKS  ---------------------- 
+whoami  ------------------------ WORKS  ----------------------
+tail    ------------------------ WORKS  ---------------------- no operators
+History ------------------------ WORKS  ---------------------- no operators
+man     ------------------------ TBW    ----------------------
+Command History ---------------- TBD    ---------------------- up arrows, tab
+Welcome ------------------------ TBW    ----------------------
+User Manual -------------------- TBW    ----------------------
+Install Manual ----------------- TBW    ----------------------
+Help    ------------------------ TBW    ----------------------
+
+
+At this point i felt i had built in the bulk of the functionality so i decided to start writing the man page aswell as
+altering the welcome page. I Altered the welcome page to make it a bit more user friendly and aestheticly pleasing.
+
+The man page was written as a detailed explaination of all the commands provided by the system and how to operate them.
+
+Next was to write the help command, the user types help and then specifies a command, The user is then provided with a 
+more detailed description of the command, how it operates nd how it is called.
+
+I wrote the start of the help manual. I spent about 20 minutes writing the manual before i decided that it wasn't proving
+anything to have a complete menu because the only thing it proves is that i have the patience to do so.
+
+While looking over the spec i realised that the date i was displaying was not in the correct format so i went into the 
+date file and altered the format.
+
+Install manual has to be written
+Operators have to be added to ls,date,rm,tail and history
+Review of internal commands to make sure i've done them right
+Screenshots of the code as i am unable to upload it to github.
+Add more error detection and error messages.
