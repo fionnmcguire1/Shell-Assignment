@@ -1,0 +1,14 @@
+24/10/2016
+
+Did some final checks on the system,formatted the ifc output as i used echo previously before so the output of this command
+was all scrunched up together. Instead i simply called the command. I tested it against the root user to ensure i got the
+correct output.
+
+I also added an option to used ifc -a to show all the interfaces. The origional statment checked if the length of the statment
+was less than 4 (user types in: ifc ). This ran a standard ifconfig command. Then i checked if the user input was greater
+than 7 but less 11, this then checked the user entered eth to make sure the structure of the command was correct. This would
+run the command for whatever interface the user used. The code i added today was to check if at the 4th character entered that 
+the next 2 characters were '-a'. i did so by adding to the if statement: && [ "${input:4:2}" = "-a" ]; then
+inside this if was a nested if to check if the input was greater than 4 but less than 7 which ran the ifconfig -a command.
+
+I decided then to add more to the help manual.
