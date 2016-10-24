@@ -1,0 +1,30 @@
+24/10/2016
+
+INSTALL MANUAL
+
+Step 1. Create a new user
+    >>>useradd [username]
+    >>>passwd [username]
+
+Step 2. Change to root user
+    >>>su
+    >>>[enter password]
+    
+Step 3. Create three shell script files in the bin folder named custom_shell.sh,custom_shell_date.sh,custom_shell_ud.sh
+    >>>nano custom_shell.sh
+    >>>nano custom_shell_date.sh
+    >>>nano custom_shell_ud.sh
+
+Step 4. Copy the bash code in the screenshots provided to the appropriote, save and exit.
+
+Step 5. Change the running shell for the new user from bash to the custom shell.
+    >>>chsh -s /bin/custom_shell.sh
+    
+    
+The new users shell is now the custom shell with limited functionality.
+
+For more information contact
+c13316356@mydit.ie
+Author: Fionn Mcguire
+Date 24/10/2016
+    
